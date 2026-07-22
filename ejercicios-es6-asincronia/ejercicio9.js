@@ -9,3 +9,14 @@ Documentación: https://pokeapi.co/
 URL: https://pokeapi.co/api/v2/pokemon/1
 
 Tened en cuenta que esta URL se refiere al pokemon número 1, que es bulbasaur, debemos hallar la manera de con una url similar ir consiguiendo pokemons aleatorios dentro de unos límites.*/
+
+const imageElement = document.querySelector('.random-image');
+
+const randomId = Math.floor(Math.random() * 151) + 1;
+
+fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`)
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    imageElement.src = data.sprites.other['official-artwork'].front_default;
+  });
