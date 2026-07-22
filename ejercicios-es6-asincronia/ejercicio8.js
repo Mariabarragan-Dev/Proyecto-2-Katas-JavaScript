@@ -8,3 +8,31 @@ URL de la documentación (para que indaguéis): https://thronesapi.com/
 Esta sería la URL final (la que deberéis utilizar para vuestra petición):
 
 https://thronesapi.com/api/v2/Characters*/
+
+const selectElement = document.getElementById('character-list');
+const imageElement = document.querySelector('.character-image');
+
+let characters = [];
+
+  fetch('https://thronesapi.com/api/v2/Characters')
+  .then(response => response.json())
+  .then(data => {
+    characters = data;
+
+    data.forEach(character => {
+      const option = document.createElement('option');
+      option.value = character.id;
+      option.textContent = character.fullName;
+      selectElement.appendChild(option);
+    });
+  });
+
+  selectElement.addEventListener('change', (event) => {
+  const selectedId = event.target.value;
+
+  const selectedCharacter = characters.find(
+    character => character.id === Number(selectedId)
+  );
+
+  imageElement.src = selectedCharacter.imageUrl;
+});
